@@ -1,0 +1,314 @@
+[
+  {
+    "id": "marlowe-fairwind",
+    "key": "marlowe",
+    "name": "Marlowe Fairwind",
+    "ancestry": "Elf",
+    "class": "Ex-Military Police (Medic focus)",
+    "level": 1,
+    "pdf": "/pdfs/Quickstart.pdf",
+    "traits": {
+      "strength": -1,
+      "agility": 0,
+      "finesse": 1,
+      "instinct": 0,
+      "knowledge": 1,
+      "presence": 2
+    },
+    "defense": {
+      "evasion": 3,
+      "armor": 3,
+      "armorSlots": 2
+    },
+    "damageThresholds": {
+      "minor": 5,
+      "major": 11,
+      "severe": 16
+    },
+    "hope": 1,
+    "weapon": {
+      "name": "Baton",
+      "trait": "Finesse melee",
+      "damage": "d6",
+      "notes": "Standard-issue MP baton for non-lethal takedowns."
+    },
+    "secondaryWeapon": {
+      "name": "Stun Gun",
+      "trait": "Finesse ranged",
+      "damage": "4",
+      "notes": "Non-lethal ranged taser; delivers a brief shock."
+    },
+    "armor": {
+      "name": "Standard Issue MP Armor",
+      "thresholds": "5/11",
+      "score": 3,
+      "notes": "Issued to military police; sturdy but flexible."
+    },
+    "experiences": [
+      { "name": "Heal Assistance", "modifier": 2 },
+      { "name": "Quick Reflexes", "modifier": 1 }
+    ],
+    "stats": {
+      "hp": 12,
+      "damage": 0,
+      "focus": 3,
+      "custom": {
+        "spellcast": 2,
+        "prepared": 1
+      },
+      "notes": "Royal Mage • Not On My Watch"
+    },
+    "notes": "Former military police with medical training; calm under pressure and quick to stabilize allies."
+  },
+  {
+    "id": "barnacle-ribbet",
+    "key": "barnacle",
+    "name": "Barnacle",
+    "ancestry": "Underborne Ribbet",
+    "class": "Rogue",
+    "level": 1,
+    "pdf": "/pdfs/Quickstart.pdf",
+    "traits": {
+      "strength": -1,
+      "agility": 2,
+      "finesse": 1,
+      "instinct": 1,
+      "knowledge": 0,
+      "presence": 0
+    },
+    "defense": {
+      "evasion": 4,
+      "armor": 2,
+      "armorSlots": 1
+    },
+    "damageThresholds": {
+      "minor": 4,
+      "major": 9,
+      "severe": 14
+    },
+    "hope": 1,
+    "weapon": {
+      "name": "Battle Knife",
+      "trait": "Finesse melee",
+      "damage": "d8",
+      "notes": "Paired: +2 to primary weapon damage within melee range."
+    },
+    "armor": {
+      "name": "Light leathers",
+      "thresholds": "4/9",
+      "score": 2,
+      "notes": "Keeps movement free."
+    },
+    "secondaryWeapon": {
+      "name": "Throwing Knives",
+      "trait": "Finesse ranged",
+      "damage": "4",
+      "notes": "Quick draw for silent ranged strikes."
+    },
+    "armor": {
+      "name": "Light leathers",
+      "thresholds": "4/9",
+      "score": 2,
+      "notes": "Keeps movement free."
+    },
+    "experiences": [
+      { "name": "Daredevil", "modifier": 1 },
+      { "name": "Shadow Escape", "modifier": 2 }
+    ],
+    "stats": {
+      "hp": 15,
+      "damage": 0,
+      "focus": 2,
+      "custom": {
+        "stealth": 2,
+        "escape": 1
+      },
+      "notes": "Dares danger; fears water; won’t swim."
+    },
+    "notes": "There is no danger he won’t get into and no situation he cannot get out of."
+  },
+  {
+    "id": "garrick-reed",
+    "key": "garrick",
+    "name": "Garrick Reed",
+    "ancestry": "Human",
+    "class": "Military Police Trainer",
+    "level": 1,
+    "pdf": "/pdfs/Quickstart.pdf",
+    "traits": {
+      "strength": 2,
+      "agility": 1,
+      "finesse": 1,
+      "instinct": 0,
+      "knowledge": -1,
+      "presence": 0
+    },
+    "defense": {
+      "evasion": 2,
+      "armor": 4,
+      "armorSlots": 3
+    },
+    "damageThresholds": {
+      "minor": 6,
+      "major": 12,
+      "severe": 17
+    },
+    "hope": 1,
+    "weapon": {
+      "name": "Machete",
+      "trait": "Strength melee",
+      "damage": "d10",
+      "notes": "Standard-issue chopping blade; heavy and direct."
+    },
+    "armor": {
+      "name": "Battle Vest & Combat Shield",
+      "thresholds": "6/12",
+      "score": 4,
+      "notes": "Kevlar-like vest with a reinforced shield for close quarters."
+    },
+    "secondaryWeapon": {
+      "name": "Shield Bash",
+      "trait": "Strength melee",
+      "damage": "d6",
+      "notes": "Close-in shove and stun with the combat shield."
+    },
+    "experiences": [
+      { "name": "Kill with Kindness", "modifier": 1 },
+      { "name": "Former Soldier", "modifier": 1 }
+    ],
+    "stats": {
+      "hp": 18,
+      "damage": 0,
+      "focus": 1,
+      "custom": {
+        "proficiency": 1,
+        "kindness": 1
+      },
+      "notes": "Defector with ‘kill them with kindness’ attitude."
+    },
+    "notes": "Massive human MP trainer; larger-than-life presence; drills recruits and leads from the front."
+  },
+  {
+    "id": "khari-nix",
+    "key": "khari",
+    "name": "Khari Nix",
+    "ancestry": "Ridgeborne Giant",
+    "class": "Guardian",
+    "level": 1,
+    "pdf": "/pdfs/Quickstart.pdf",
+    "traits": {
+      "strength": 2,
+      "agility": 1,
+      "finesse": 1,
+      "instinct": 0,
+      "knowledge": -1,
+      "presence": 0
+    },
+    "defense": {
+      "evasion": 1,
+      "armor": 5,
+      "armorSlots": 3
+    },
+    "damageThresholds": {
+      "minor": 7,
+      "major": 13,
+      "severe": 18
+    },
+    "hope": 1,
+    "weapon": {
+      "name": "Military Battle Axe",
+      "trait": "Strength melee",
+      "damage": "d12",
+      "notes": "Can hit from outside close combat distance."
+    },
+    "secondaryWeapon": {
+      "name": "Big Boot",
+      "trait": "Strength melee",
+      "damage": "4",
+      "notes": "A massive kick that shoves foes backward."
+    },
+    "armor": {
+      "name": "Special Forces Battle Armor",
+      "thresholds": "7/13",
+      "score": 5,
+      "notes": "Lumbering but tough."
+    },
+    "experiences": [
+      { "name": "Loyal Guardian", "modifier": 2 },
+      { "name": "Field Medic", "modifier": 1 }
+    ],
+    "stats": {
+      "hp": 20,
+      "damage": 0,
+      "focus": 1,
+      "custom": {
+        "loyalty": 2,
+        "axe-mastery": 2
+      },
+      "notes": "Loyal to the end; born with an axe in hand."
+    },
+    "notes": "Dry humor; suffers no fools; frontline anchor."
+  },
+  {
+    "id": "varian-soto",
+    "key": "varian",
+    "name": "Varian Soto",
+    "ancestry": "Wildborne Katari",
+    "class": "Ranger",
+    "level": 1,
+    "pdf": "/pdfs/Quickstart.pdf",
+    "traits": {
+      "strength": 0,
+      "agility": 2,
+      "finesse": 1,
+      "instinct": 1,
+      "knowledge": 0,
+      "presence": -1
+    },
+    "defense": {
+      "evasion": 4,
+      "armor": 2,
+      "armorSlots": 2
+    },
+    "damageThresholds": {
+      "minor": 5,
+      "major": 10,
+      "severe": 15
+    },
+    "hope": 1,
+    "weapon": {
+      "name": "Sidearm",
+      "trait": "Finesse ranged",
+      "damage": "d8",
+      "notes": "Reliable sidearm for close-to-mid engagements."
+    },
+    "armor": {
+      "name": "Light scout gear",
+      "thresholds": "5/10",
+      "score": 2,
+      "notes": "Keeps them quick on their feet."
+    },
+    "secondaryWeapon": {
+      "name": "Sniper Rifle",
+      "trait": "Finesse ranged",
+      "damage": "d12",
+      "notes": "Takes 1 round to reload and aim before next shot."
+    },
+    "experiences": [
+      { "name": "Hunter’s Instinct", "modifier": 2 },
+      { "name": "Shoot First", "modifier": 1 }
+    ],
+    "stats": {
+      "hp": 17,
+      "damage": 0,
+      "focus": 2,
+      "custom": {
+        "archery": 2,
+        "instinct": 1
+      },
+      "notes": "Shoot first, ask later."
+    },
+    "notes": "Shoots first, doesn’t ask questions; decisive and fast to act."
+  }
+]
+

@@ -1,0 +1,71 @@
+{
+  "id": "trial-and-error",
+  "title": "Trial and Error (Nexus Laboratory)",
+  "summary": "Your team of couriers has traveled across the arctic tundra, braving harsh weather conditions and treacherous terrain, to reach the isolated Nexus Laboratory. As you arrive, you're greeted by Dr. Graddius Stoutbrand, who thanks you for your timely delivery. Just as he's concluding their transaction, an alarm blares through the facility, and Dr. Stoutbrand asks you to take shelter in the panic room with him. Minutes tick by, punctuated only by the sound of distant screams and the lab's systems malfunctioning. Then, Dr. Stoutbrand returns, gravely injured, and collapses at your feet as he opens the door. The darkness outside seems to be growing thicker... what do you do?",
+  "npcs": [
+    {
+      "name": "Dr. Graddius Stoutbrand",
+      "role": "Dwarf noble; lab newcomer",
+      "note": "Duty-bound to contain the crisis; not fully versed in the facility’s guts, but brings resources and expects the courier job done fast."
+    },
+    {
+      "name": "Dr. Valeria Livia",
+      "role": "Elf chief scientist",
+      "note": "Believed in the serum’s promise; as a Ghast she struggles to stay composed but still holds valuable scientific insight."
+    },
+    {
+      "name": "Dr. Jamison Hague",
+      "role": "Human biochemist",
+      "note": "Drove the serum for defense; now a troll-like foe who knows the serum’s properties intimately—neutralize quickly."
+    }
+  ],
+  "enemies": [
+    { "name": "Mutated Jamison", "threat": "High", "hp": 15, "attack": "+4 to hit, 6 dmg claws", "note": "Hunts from ceilings; vulnerable to heat/acid; antidote only when unconscious." },
+    { "name": "Valeria (Ghast)", "threat": "Medium", "hp": 8, "attack": "+2 to hit, 4 dmg icy touch", "note": "Will attack if not cured; becomes ally when cured." },
+    { "name": "Swarm of Rats", "threat": "Low", "hp": 1, "attack": "+0 to hit, 1 dmg bites", "note": "Triggered in cold storage while fetching catalyst." },
+    {
+      "name": "Lab Spies",
+      "threat": "Low",
+      "hp": 3,
+      "attack": "+1 to hit, 2 dmg stun guns",
+      "note": "Hired by a rival to steal the amplification serum; fragile, identities unknown, may have hidden accomplices."
+    },
+    { "name": "Contaminated Scientist", "threat": "Low", "hp": 4, "attack": "+0 to hit, 2 dmg erratic swings", "note": "Exposed to serum; erratic and easy to put down." },
+    { "name": "Contaminated Guard", "threat": "Low", "hp": 5, "attack": "+1 to hit, 3 dmg baton", "note": "Compromised security staff; sluggish but still armed." }
+  ],
+  "locations": [
+    { "name": "Nexus Laboratory", "detail": "Remote arctic dome with sealed wards; alarm locks doors and kills lights." },
+    { "name": "Experimentation Chamber", "detail": "Broken pod, gas/ammonia on floor; Valeria is here, turned Ghast." },
+    { "name": "Control Room & Panic Room", "detail": "Alarm hub; safe room where Graddius hides the party first." },
+    { "name": "Cold Storage", "detail": "Holds catalyst vial; disturbed rats swarm." },
+    { "name": "Observatory", "detail": "Jamison stalks from the ceiling for the final ambush." }
+  ],
+  "referenceImages": [
+    { "title": "Nexus Lab Exterior", "url": "/lab-outside.png", "share": true },
+    { "title": "Wolf Pack Near the Lab", "url": "/wolf-pack.png", "share": true },
+    { "title": "Dr. Graddius Stoutbrand", "url": "/Graddius.png", "share": false },
+    { "title": "Dr. Valeria Livia", "url": "/Valeria.png", "share": false },
+    { "title": "Lab Map", "url": "/map.png", "share": false },
+    { "title": "Lab Spies", "url": "/spy.png", "share": true },
+    { "title": "Contaminated Lab Workers", "url": "/contaminated-labs-workers.png", "share": false },
+    { "title": "Guards in the Lab", "url": "/guards.png", "share": false },
+    { "title": "Mutated Jamison", "url": "/jameson.png", "share": false },
+    { "title": "Lab Rats", "url": "/rats.png", "share": false }
+  ],
+  "dmNotes": [
+    { "note": "Briefing: deliver catalyst vial to Nexus Lab.  The trip will be perilous, but you will be rewarded.  The Lab is located in a remote arctic dome.  You will need to navigate the treacherous terrain and be isolated from the outside world for the duration of the campaign.", "share": true },
+    { "note": "As you approach the lab, you notice that the wolves seem unusually docile, almost... curious about your presence. The smaller wolf cubs wag their tails, and the larger wolf, sensing no immediate threat, lets out a gentle growl as if asking: What brings you to our territory? Dr. Stoutbrand, standing at the entrance of the lab, seems oblivious to this unusual encounter. What do you do?", "share": true },
+    { "note": "As Dr. Stoutbrand collapses at your feet, you notice his lab coat is torn and covered in dark, glistening fluid. His eyes are sunken, and his skin has a sickly pale hue. The air around him seems to grow colder, and the darkness outside appears to be seeping into the room, tendrils of shadow creeping across the floor. You see that Dr. Stoutbrand's arm is twisted at an unnatural angle, and his leg is pinned beneath his own body. He utters a faint whisper: The... containment... breach... it was supposed to be... impossible... The darkness continues to spread, pooling around him like a dark liquid. What do you do next?", "share": false },
+    { "note": "As you gaze into the darkness outside, you notice Dr. Jamison Hague's imposing figure emerging from the ceiling vents. His massive, mutated form towers over the laboratory, his eyes glowing with an unnatural light. Despite his intimidating appearance, he doesn't seem to be actively attacking anyone... yet. The air is thick with tension as Dr. Stoutbrand struggles to speak, his voice weak and labored. Please... help me... contain him... whatever it takes... His words trail off as Dr. Hague's gaze fixes on the two of you. You sense a primal energy emanating from him, as if he's searching for something or someone. The darkness outside seems to be growing thicker, like an unseen force is drawing closer. What do you do? ", "share": false },
+    { "note": "Spies: hired by rival to steal serum; They have been contaminated and will attack you if you do not kill them quickly.", "share": false },
+    { "note": "Dr. Valeria Livia materializes in front of you, her eyes sunken, and her voice barely audible. She speaks of Jamison, saying he's the only one who can help her, but she knows he's... different. The air is charged with an otherworldly energy.", "share": false },
+    { "note": "If one of the 3 main scientists die, contamination sequence triggers 90 minutes later.  This sequence will burn everyone in the lab, to prevent the spread of the contamination.", "share": false }
+  ],
+  "plotDetails": [
+    "Labrador's Labyrinth: Dim, quiet Nexus halls; warning signs everywhere; Jamison already carved a path. Valeria stabilized; antidote component in hand.",
+    "Jamison's Journal: Cryptic notes hint the serum's applications tie to a larger conspiracy with the lab's patrons.",
+    "Labrador's Logbook: Assistant's log shows worries and pushback about serum risks before it was unleashed.",
+    "Darkness Descends: Power flickers; corridors drop into darkness; strange echoes force navigation by senses, not sight."
+  ]
+}
+
