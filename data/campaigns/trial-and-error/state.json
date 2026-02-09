@@ -1,0 +1,206 @@
+{
+  "stats": {
+    "marlowe-fairwind": {
+      "hp": 12,
+      "damage": 0,
+      "focus": 3,
+      "custom": {
+        "spellcast": 2,
+        "prepared": 1,
+        "currentHp": 11
+      },
+      "notes": "Royal Mage • Not On My Watch",
+      "hope": 1,
+      "stress": 2
+    },
+    "barnacle-ribbet": {
+      "hp": 15,
+      "damage": 0,
+      "focus": 2,
+      "custom": {
+        "stealth": 2,
+        "escape": 1,
+        "currentHp": 15
+      },
+      "notes": "Dares danger; fears water; won’t swim.",
+      "hope": 1,
+      "stress": 0
+    },
+    "garrick-reed": {
+      "hp": 18,
+      "damage": 0,
+      "focus": 1,
+      "custom": {
+        "proficiency": 1,
+        "kindness": 1,
+        "currentHp": 16,
+        "armorSlotsUsed": [
+          true,
+          false,
+          false
+        ]
+      },
+      "notes": "Defector with ‘kill them with kindness’ attitude.",
+      "hope": 2,
+      "stress": 1
+    },
+    "khari-nix": {
+      "hp": 20,
+      "damage": 0,
+      "focus": 1,
+      "custom": {
+        "loyalty": 2,
+        "axe-mastery": 2,
+        "currentHp": 17,
+        "armorSlotsUsed": [
+          false,
+          false,
+          false
+        ],
+        "experienceUsage": [
+          false,
+          false
+        ]
+      },
+      "notes": "Loyal to the end; born with an axe in hand.",
+      "hope": 1,
+      "stress": 2
+    },
+    "varian-soto": {
+      "hp": 17,
+      "damage": 0,
+      "focus": 2,
+      "custom": {
+        "archery": 2,
+        "instinct": 1,
+        "currentHp": 17
+      },
+      "notes": "Shoot first, ask later.",
+      "hope": 3,
+      "stress": 0
+    }
+  },
+  "events": [],
+  "referenceNotes": [
+    {
+      "id": "6da39833-c11c-4425-95f3-4165b913d558",
+      "author": "Dungeon Master",
+      "text": "Briefing: deliver catalyst vial to Nexus Lab.  The trip will be perilous, but you will be rewarded.  The Lab is located in a remote arctic dome.  You will need to navigate the treacherous terrain and be isolated from the outside world for the duration of the campaign.",
+      "createdAt": 1770513691412,
+      "shared": true
+    },
+    {
+      "id": "c759b6fa-aaac-4aa4-8840-f5034e0389d1",
+      "author": "Dungeon Master",
+      "text": "As you approach the lab, you notice that the wolves seem unusually docile, almost... curious about your presence. The smaller wolf cubs wag their tails, and the larger wolf, sensing no immediate threat, lets out a gentle growl as if asking: What brings you to our territory? Dr. Stoutbrand, standing at the entrance of the lab, seems oblivious to this unusual encounter. What do you do?",
+      "createdAt": 1770513691413,
+      "shared": true
+    },
+    {
+      "id": "a65d595a-4d82-4ac4-bb8b-d110bc78e46f",
+      "author": "Dungeon Master",
+      "text": "As Dr. Stoutbrand collapses at your feet, you notice his lab coat is torn and covered in dark, glistening fluid. His eyes are sunken, and his skin has a sickly pale hue. The air around him seems to grow colder, and the darkness outside appears to be seeping into the room, tendrils of shadow creeping across the floor. You see that Dr. Stoutbrand's arm is twisted at an unnatural angle, and his leg is pinned beneath his own body. He utters a faint whisper: The... containment... breach... it was supposed to be... impossible... The darkness continues to spread, pooling around him like a dark liquid. What do you do next?",
+      "createdAt": 1770513691414,
+      "shared": true
+    },
+    {
+      "id": "4078dbe4-1915-4fe5-ae8c-a3ba6de33496",
+      "author": "Dungeon Master",
+      "text": "As you gaze into the darkness outside, you notice Dr. Jamison Hague's imposing figure emerging from the ceiling vents. His massive, mutated form towers over the laboratory, his eyes glowing with an unnatural light. Despite his intimidating appearance, he doesn't seem to be actively attacking anyone... yet. The air is thick with tension as Dr. Stoutbrand struggles to speak, his voice weak and labored. Please... help me... contain him... whatever it takes... His words trail off as Dr. Hague's gaze fixes on the two of you. You sense a primal energy emanating from him, as if he's searching for something or someone. The darkness outside seems to be growing thicker, like an unseen force is drawing closer. What do you do?",
+      "createdAt": 1770513691415,
+      "shared": false
+    },
+    {
+      "id": "2a46429d-0fd6-49d4-a502-5e77fe2bcf4d",
+      "author": "Dungeon Master",
+      "text": "Spies: hired by rival to steal serum; They have been contaminated and will attack you if you do not kill them quickly.",
+      "createdAt": 1770513691416,
+      "shared": true
+    },
+    {
+      "id": "238c92a3-5e94-4a94-ad94-5bdf7b169bef",
+      "author": "Dungeon Master",
+      "text": "Dr. Valeria Livia materializes in front of you, her eyes sunken, and her voice barely audible. She speaks of Jamison, saying he's the only one who can help her, but she knows he's... different. The air is charged with an otherworldly energy.",
+      "createdAt": 1770513691417,
+      "shared": false
+    },
+    {
+      "id": "c4d34134-13cf-44a9-ad68-7b9de352176c",
+      "author": "Dungeon Master",
+      "text": "If one of the 3 main scientists die, contamination sequence triggers 90 minutes later.  This sequence will burn everyone in the lab, to prevent the spread of the contamination.",
+      "createdAt": 1770513691418,
+      "shared": true
+    }
+  ],
+  "sharedReferenceImages": [
+    {
+      "title": "Nexus Lab Exterior",
+      "url": "/lab-outside.png"
+    },
+    {
+      "title": "Wolf Pack Near the Lab",
+      "url": "/wolf-pack.png",
+      "share": true
+    },
+    {
+      "title": "Dr. Graddius Stoutbrand",
+      "url": "/Graddius.png",
+      "share": false
+    },
+    {
+      "title": "Lab Map",
+      "url": "/map.png",
+      "share": false
+    },
+    {
+      "title": "Lab Spies",
+      "url": "/spy.png",
+      "share": true
+    },
+    {
+      "title": "Guards in the Lab",
+      "url": "/guards.png",
+      "share": false
+    },
+    {
+      "title": "Mutated Jamison",
+      "url": "/jameson.png",
+      "share": false
+    }
+  ],
+  "fear": 3,
+  "playerNotes": {
+    "khari": "Saved wolf pup and have him watching the injured doctor.\nFound a side arm weapon.",
+    "garrick": "Shield was damaged when attacking Zombie",
+    "marlowe": "My stun gun aim is poor"
+  },
+  "weaponOverrides": {
+    "khari-nix": {
+      "tertiary": {
+        "id": "sidearm",
+        "name": "Sidearm",
+        "trait": "Finesse ranged",
+        "damage": "d8",
+        "notes": "Reliable sidearm for close-to-mid engagements."
+      }
+    }
+  },
+  "xpStatus": {
+    "khari-nix": {
+      "currentExperience": 300,
+      "currentLevel": 1
+    },
+    "garrick-reed": {
+      "currentExperience": 400,
+      "currentLevel": 1
+    },
+    "marlowe-fairwind": {
+      "currentExperience": 200,
+      "currentLevel": 1
+    },
+    "varian-soto": {
+      "currentExperience": 150,
+      "currentLevel": 1
+    }
+  }
+}

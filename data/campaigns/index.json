@@ -1,0 +1,15 @@
+{
+  "activeId": "trial-and-error",
+  "campaigns": [
+    {
+      "id": "trial-and-error",
+      "title": "Trial and Error (Nexus Laboratory)",
+      "summary": "Your team of couriers has traveled across the arctic tundra, braving harsh weather conditions and treacherous terrain, to reach the isolated Nexus Laboratory."
+    },
+    {
+      "id": "demo-campaign",
+      "title": "Demo Campaign",
+      "summary": "Short placeholder text"
+    }
+  ]
+}

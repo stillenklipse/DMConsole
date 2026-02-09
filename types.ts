@@ -9,6 +9,7 @@ export type StatBlock = {
 };
 
 export type Weapon = {
+  id?: string;
   name: string;
   trait?: string;
   damage?: string;
@@ -42,8 +43,10 @@ export type Character = {
     severe?: number;
   };
   hope?: number;
+  experienceNeeded?: number;
   weapon?: Weapon;
   secondaryWeapon?: Weapon;
+  tertiaryWeapon?: Weapon;
   armor?: {
     name: string;
     thresholds?: string;
@@ -60,6 +63,10 @@ export type Campaign = {
   id: string;
   title: string;
   summary?: string;
+  theme?: {
+    backgroundImage?: string;
+    backgroundColor?: string;
+  };
   npcs?: { name: string; role?: string; note?: string }[];
   enemies?: { name: string; threat?: string; note?: string; hp?: number; attack?: string }[];
   locations?: { name: string; detail?: string }[];
@@ -90,5 +97,8 @@ export type GameState = {
   referenceNotes: { id: string; author: string; text: string; createdAt: number; shared?: boolean }[];
   sharedReferenceImages?: { title: string; url: string }[];
   fear?: number;
+  playerNotes?: Record<string, string>;
+  weaponOverrides?: Record<string, { primary?: Weapon | null; secondary?: Weapon | null; tertiary?: Weapon | null }>;
+  xpStatus?: Record<string, { currentExperience: number; currentLevel: number }>;
 };
 

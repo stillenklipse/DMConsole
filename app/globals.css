@@ -27,10 +27,11 @@ a {
 
 .page {
   min-height: 100vh;
-  background-image: url("/app_background.png");
-  background-size: cover;
+  background-color: var(--page-bg-color, var(--bg));
+  background-image: var(--page-bg-image, url("/app_background.png"));
+  background-size: 100% auto;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top center;
 }
 
 .card {
@@ -51,6 +52,57 @@ a {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+}
+
+.status-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: rgba(82, 96, 109, 0.15);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.status-pill.info {
+  color: #1d4ed8;
+  background: rgba(29, 78, 216, 0.15);
+}
+
+.status-pill.success {
+  color: #15803d;
+  background: rgba(21, 128, 61, 0.15);
+}
+
+.status-pill.warning {
+  color: #b45309;
+  background: rgba(180, 83, 9, 0.15);
+}
+
+.status-pill.error {
+  color: #b91c1c;
+  background: rgba(185, 28, 28, 0.15);
 }
 
 button {

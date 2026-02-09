@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Character, GameEvent, StatBlock } from "@/types";
+import { Character, StatBlock, Weapon } from "@/types";
 import { DiceRoller } from "@/components/DiceRoller";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,7 +18,6 @@ type Props = {
 
 export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
   const [stats, setStats] = useState<StatBlock>(initialStats);
-  const [events, setEvents] = useState<GameEvent[]>([]);
   const traitLabels = ["Strength", "Agility", "Finesse", "Instinct", "Knowledge", "Presence"] as const;
   const [hope, setHope] = useState<number>(character.hope ?? 0);
   const [stress, setStress] = useState<number>(0);
@@ -46,6 +45,18 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
     })()
   );
   const [experienceStatus, setExperienceStatus] = useState<string>("");
+  const [playerNotes, setPlayerNotes] = useState<string>("");
+  const [notesStatus, setNotesStatus] = useState<string>("");
+  const [isEditingNotes, setIsEditingNotes] = useState<boolean>(false);
+  const [lastServerNotes, setLastServerNotes] = useState<string>("");
+  const [weaponOverrides, setWeaponOverrides] = useState<{
+    primary?: Weapon | null;
+    secondary?: Weapon | null;
+    tertiary?: Weapon | null;
+  }>({});
+  const [weaponStatus, setWeaponStatus] = useState<string>("");
+  const [currentLevel, setCurrentLevel] = useState<number>(1);
+  const [currentExperience, setCurrentExperience] = useState<number>(0);
   const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Apply initial server stats (including custom fields) on first render / prop change
@@ -106,11 +117,60 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
           setUsedExperiences(Array.from({ length: len }, (_, i) => Boolean(expUsage[i])));
         }
       }
-      setEvents(data.events ?? []);
+      if (typeof data.playerNotes === "string") {
+        setLastServerNotes(data.playerNotes);
+        if (!isEditingNotes) {
+          setPlayerNotes(data.playerNotes);
+        }
+      }
+      if (data.weaponOverrides?.[character.id]) {
+        setWeaponOverrides(data.weaponOverrides[character.id]);
+      }
+      const xp = data.xpStatus?.[character.id];
+      if (xp) {
+        setCurrentLevel(xp.currentLevel ?? 1);
+        setCurrentExperience(xp.currentExperience ?? 0);
+      }
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [character.id, playerKey]);
+  }, [character.id, playerKey, isEditingNotes]);
+
+  const resolveWeapon = (slot: "primary" | "secondary" | "tertiary") => {
+    const override = weaponOverrides?.[slot];
+    if (override === null) return null;
+    if (override) return override;
+    if (slot === "primary") return character.weapon ?? null;
+    if (slot === "secondary") return character.secondaryWeapon ?? null;
+    return character.tertiaryWeapon ?? null;
+  };
+
+  const experienceNeeded = character.experienceNeeded ?? 10;
+  const requiredForLevel = (level: number) => {
+    return Math.round(experienceNeeded * Math.pow(1.1, Math.max(0, level - 1)));
+  };
+  const requiredForCurrentLevel = requiredForLevel(currentLevel);
+  const xpProgress = requiredForCurrentLevel > 0 ? Math.min(1, currentExperience / requiredForCurrentLevel) : 0;
+
+  const dropWeapon = async (slot: "primary" | "secondary" | "tertiary") => {
+    setWeaponStatus("Dropping weapon...");
+    const res = await fetch("/api/state", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "weapon-assign",
+        playerKey,
+        characterId: character.id,
+        slot,
+        weapon: null
+      })
+    });
+    setWeaponStatus(res.ok ? "Weapon dropped." : "Failed to drop weapon.");
+    if (res.ok) {
+      setWeaponOverrides((prev) => ({ ...prev, [slot]: null }));
+    }
+    setTimeout(() => setWeaponStatus(""), 2000);
+  };
 
   const traitEntries = [
     { label: "Strength", value: character.traits?.strength ?? 0 },
@@ -254,6 +314,27 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
     };
   }, [currentHp, hope, stress, stats.damage, playerKey, character.id]);
 
+  const saveNotes = async () => {
+    setNotesStatus("Saving...");
+    const res = await fetch("/api/state", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "player-notes",
+        playerKey,
+        note: playerNotes
+      })
+    });
+    if (res.ok) {
+      setNotesStatus("Notes saved.");
+      setLastServerNotes(playerNotes);
+      setIsEditingNotes(false);
+    } else {
+      setNotesStatus("Failed to save.");
+    }
+    setTimeout(() => setNotesStatus(""), 2000);
+  };
+
   const imageName = character.name.replace(/\s+/g, "").replace(/[^a-zA-Z0-9_-]/g, "");
   const profileSrc = `/` + imageName + (imageName.endsWith(".png") ? "" : ".png");
 
@@ -262,6 +343,22 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
       <div className="row">
         <div className="card stack" style={{ flex: 1, minWidth: 260 }}>
           <h2>Dashboard: {character.name}</h2>
+          <div className="stack" style={{ gap: 6 }}>
+            <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+              <strong>Level {currentLevel}</strong>
+              <small style={{ color: "var(--muted)" }}>Progress</small>
+            </div>
+            <div style={{ width: "100%", height: 10, background: "rgba(255,255,255,0.12)", borderRadius: 999 }}>
+              <div
+                style={{
+                  width: `${Math.round(xpProgress * 100)}%`,
+                  height: "100%",
+                  background: "#22c55e",
+                  borderRadius: 999
+                }}
+              />
+            </div>
+          </div>
           <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
             <img
               src={profileSrc}
@@ -487,53 +584,52 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
       <div className="row">
         <div className="card stack" style={{ flex: 1, minWidth: 240 }}>
           <h3>Weapons</h3>
-          <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-            <strong>Weapon:</strong>
-            <span>{character.weapon?.name ?? "—"}</span>
-          </div>
-          {character.weapon?.trait && (
-            <div className="row" style={{ justifyContent: "space-between", alignItems: "center", color: "var(--muted)" }}>
-              <span>Trait</span>
-              <span>{character.weapon.trait}</span>
-            </div>
-          )}
-          {character.weapon?.damage && (
-            <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-              <span>Damage</span>
-              <span>{character.weapon.damage}</span>
-            </div>
-          )}
-          {character.weapon?.notes && (
-            <div className="row" style={{ justifyContent: "flex-start", color: "var(--muted)" }}>
-              <small>{character.weapon.notes}</small>
-            </div>
-          )}
-          {character.secondaryWeapon && (
-            <>
-              <div style={{ borderTop: "1px solid #ccc", margin: "8px 0" }} />
-              <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-                <strong>Secondary:</strong>
-                <span>{character.secondaryWeapon.name}</span>
-              </div>
-              {character.secondaryWeapon.trait && (
-                <div className="row" style={{ justifyContent: "space-between", alignItems: "center", color: "var(--muted)" }}>
-                  <span>Trait</span>
-                  <span>{character.secondaryWeapon.trait}</span>
-                </div>
-              )}
-              {character.secondaryWeapon.damage && (
+          {(["primary", "secondary", "tertiary"] as const).map((slot) => {
+            const weapon = resolveWeapon(slot);
+            const label = slot === "primary" ? "Primary" : slot === "secondary" ? "Secondary" : "Tertiary";
+            return (
+              <div key={slot} className="stack" style={{ gap: 6 }}>
                 <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-                  <span>Damage</span>
-                  <span>{character.secondaryWeapon.damage}</span>
+                  <strong>{label}:</strong>
+                  <span>{weapon?.name ?? "—"}</span>
                 </div>
-              )}
-              {character.secondaryWeapon.notes && (
-                <div className="row" style={{ justifyContent: "flex-start", color: "var(--muted)" }}>
-                  <small>{character.secondaryWeapon.notes}</small>
-                </div>
-              )}
-            </>
-          )}
+                {weapon ? (
+                  <>
+                    {weapon.trait && (
+                      <div className="row" style={{ justifyContent: "space-between", alignItems: "center", color: "var(--muted)" }}>
+                        <span>Trait</span>
+                        <span>{weapon.trait}</span>
+                      </div>
+                    )}
+                    {weapon.damage && (
+                      <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+                        <span>Damage</span>
+                        <span>{weapon.damage}</span>
+                      </div>
+                    )}
+                    {weapon.notes && (
+                      <div className="row" style={{ justifyContent: "flex-start", color: "var(--muted)" }}>
+                        <small>{weapon.notes}</small>
+                      </div>
+                    )}
+                    <div className="row" style={{ justifyContent: "flex-end" }}>
+                      <button
+                        type="button"
+                        onClick={() => dropWeapon(slot)}
+                        style={{ background: "#ef4444", padding: "6px 10px", fontSize: "0.85rem" }}
+                      >
+                        Drop
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <small style={{ color: "var(--muted)" }}>Empty slot</small>
+                )}
+                {slot !== "tertiary" && <div style={{ borderTop: "1px solid #ccc", margin: "8px 0" }} />}
+              </div>
+            );
+          })}
+          {weaponStatus && <small style={{ color: "var(--muted)" }}>{weaponStatus}</small>}
         </div>
         <div className="card stack" style={{ flex: 1, minWidth: 240 }}>
           <h3>Experiences</h3>
@@ -574,35 +670,24 @@ export function PlayerDashboard({ playerKey, character, initialStats }: Props) {
           )}
           <small style={{ color: "var(--muted)" }}>{experienceStatus}</small>
         </div>
-        <div className="card stack" style={{ flex: 1, minWidth: 240, maxHeight: 360, overflowY: "auto" }}>
-          <h3>Recent events</h3>
-          {events.length === 0 && <small style={{ color: "var(--muted)" }}>No activity yet.</small>}
-          {events.map((e) => (
-            <div key={e.id} className="stack" style={{ borderBottom: "1px solid var(--border)", paddingBottom: 8 }}>
-              <div>
-                <strong>{e.type}</strong> — {new Date(e.createdAt).toLocaleTimeString()}
-                {e.status !== "pending" ? ` (${e.status})` : " (awaiting DM)"}
-              </div>
-              {e.type === "roll" && (
-                <small style={{ color: "var(--muted)" }}>
-                  {(() => {
-                    const p = e.payload as any;
-                    const hope = p?.hopeRoll;
-                    const fear = p?.fearRoll;
-                    const mod = p?.modifier;
-                    const label = p?.modifierLabel ?? "mod";
-                    const total = p?.total;
-                    const crit = p?.critical ? " • CRITICAL" : "";
-                    return `Hope ${hope} + Fear ${fear} + ${label} ${mod >= 0 ? "+" : ""}${mod} = ${total}${crit}`;
-                  })()}
-                </small>
-              )}
-              {e.type === "stat-update" && (
-                <small style={{ color: "var(--muted)" }}>Stat update submitted to DM</small>
-              )}
-              {e.resolutionNote && <small>DM note: {e.resolutionNote}</small>}
-            </div>
-          ))}
+        <div className="card stack" style={{ flex: 1, minWidth: 240 }}>
+          <h3>Player Notes</h3>
+          <textarea
+            value={playerNotes}
+            onChange={(e) => {
+              setPlayerNotes(e.target.value);
+              setIsEditingNotes(e.target.value !== lastServerNotes);
+            }}
+            placeholder="Add your session notes here..."
+            rows={10}
+          />
+          <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+            <button type="button" onClick={saveNotes}>
+              Save notes
+            </button>
+            {notesStatus && <small style={{ color: "var(--muted)" }}>{notesStatus}</small>}
+          </div>
+          <small style={{ color: "var(--muted)" }}>Notes are saved with the campaign state.</small>
         </div>
       </div>
     </div>

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "baton",
+    "name": "Baton",
+    "trait": "Finesse melee",
+    "damage": "d6",
+    "notes": "Standard-issue MP baton for non-lethal takedowns."
+  },
+  {
+    "id": "stun-gun",
+    "name": "Stun Gun",
+    "trait": "Finesse ranged",
+    "damage": "4",
+    "notes": "Non-lethal ranged taser; delivers a brief shock."
+  },
+  {
+    "id": "battle-knife",
+    "name": "Battle Knife",
+    "trait": "Finesse melee",
+    "damage": "d8",
+    "notes": "Paired: +2 to primary weapon damage within melee range."
+  },
+  {
+    "id": "throwing-knives",
+    "name": "Throwing Knives",
+    "trait": "Finesse ranged",
+    "damage": "4",
+    "notes": "Quick draw for silent ranged strikes."
+  },
+  {
+    "id": "machete",
+    "name": "Machete",
+    "trait": "Strength melee",
+    "damage": "d10",
+    "notes": "Standard-issue chopping blade; heavy and direct."
+  },
+  {
+    "id": "shield-bash",
+    "name": "Shield Bash",
+    "trait": "Strength melee",
+    "damage": "d6",
+    "notes": "Close-in shove and stun with the combat shield."
+  },
+  {
+    "id": "military-battle-axe",
+    "name": "Military Battle Axe",
+    "trait": "Strength melee",
+    "damage": "d12",
+    "notes": "Can hit from outside close combat distance."
+  },
+  {
+    "id": "big-boot",
+    "name": "Big Boot",
+    "trait": "Strength melee",
+    "damage": "4",
+    "notes": "A massive kick that shoves foes backward."
+  },
+  {
+    "id": "sidearm",
+    "name": "Sidearm",
+    "trait": "Finesse ranged",
+    "damage": "d8",
+    "notes": "Reliable sidearm for close-to-mid engagements."
+  },
+  {
+    "id": "sniper-rifle",
+    "name": "Sniper Rifle",
+    "trait": "Finesse ranged",
+    "damage": "d12",
+    "notes": "Takes 1 round to reload and aim before next shot."
+  }
+]

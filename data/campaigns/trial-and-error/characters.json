@@ -26,6 +26,7 @@
       "severe": 16
     },
     "hope": 1,
+    "experienceNeeded": 1000,
     "weapon": {
       "name": "Baton",
       "trait": "Finesse melee",
@@ -87,6 +88,7 @@
       "severe": 14
     },
     "hope": 1,
+    "experienceNeeded": 1000,
     "weapon": {
       "name": "Battle Knife",
       "trait": "Finesse melee",
@@ -154,6 +156,7 @@
       "severe": 17
     },
     "hope": 1,
+    "experienceNeeded": 1000,
     "weapon": {
       "name": "Machete",
       "trait": "Strength melee",
@@ -215,6 +218,7 @@
       "severe": 18
     },
     "hope": 1,
+    "experienceNeeded": 1000,
     "weapon": {
       "name": "Military Battle Axe",
       "trait": "Strength melee",
@@ -276,6 +280,7 @@
       "severe": 15
     },
     "hope": 1,
+    "experienceNeeded": 1000,
     "weapon": {
       "name": "Sidearm",
       "trait": "Finesse ranged",
@@ -311,4 +316,3 @@
     "notes": "Shoots first, doesn’t ask questions; decisive and fast to act."
   }
 ]
-

@@ -1,0 +1,20 @@
+{
+  "id": "demo-campaign",
+  "title": "Demo Campaign",
+  "summary": "Short placeholder text",
+  "npcs": [
+    {
+      "name": "Dr. Graddius Stoutbrand",
+      "role": "Dwarf noble; lab newcomer",
+      "note": "Duty-bound to contain the crisis; not fully versed in the facility’s guts, but brings resources and expects the courier job done fast."
+    }
+  ],
+  "enemies": [
+    { "name": "Mutated Jamison", "threat": "High", "hp": 15, "attack": "+4 to hit, 6 dmg claws", "note": "Hunts from ceilings; vulnerable to heat/acid; antidote only when unconscious." },
+    { "name": "Valeria (Ghast)", "threat": "Medium", "hp": 8, "attack": "+2 to hit, 4 dmg icy touch", "note": "Will attack if not cured; becomes ally when cured." }
+  ],
+  "locations": [
+    { "name": "Nexus Laboratory", "detail": "Remote arctic dome with sealed wards; alarm locks doors and kills lights." },
+    { "name": "Experimentation Chamber", "detail": "Broken pod, gas/ammonia on floor; Valeria is here, turned Ghast." }
+  ]
+}

@@ -2,6 +2,9 @@
   "id": "trial-and-error",
   "title": "Trial and Error (Nexus Laboratory)",
   "summary": "Your team of couriers has traveled across the arctic tundra, braving harsh weather conditions and treacherous terrain, to reach the isolated Nexus Laboratory. As you arrive, you're greeted by Dr. Graddius Stoutbrand, who thanks you for your timely delivery. Just as he's concluding their transaction, an alarm blares through the facility, and Dr. Stoutbrand asks you to take shelter in the panic room with him. Minutes tick by, punctuated only by the sound of distant screams and the lab's systems malfunctioning. Then, Dr. Stoutbrand returns, gravely injured, and collapses at your feet as he opens the door. The darkness outside seems to be growing thicker... what do you do?",
+  "theme": {
+    "backgroundColor": "#0a0713"
+  },
   "npcs": [
     {
       "name": "Dr. Graddius Stoutbrand",
@@ -68,4 +71,3 @@
     "Darkness Descends: Power flickers; corridors drop into darkness; strange echoes force navigation by senses, not sight."
   ]
 }
-

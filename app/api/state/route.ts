@@ -1,11 +1,14 @@
 export const dynamic = "force-dynamic";
 
-import { loadCampaign, loadCharacters } from "@/lib/data";
+import { getActiveCampaignId, loadCampaign, loadCharacters } from "@/lib/data";
 import { StatBlock } from "@/types";
 import {
   approveEvent,
-  getCampaignFromState,
   getEvents,
+  getDirtyState,
+  getPlayerNotes,
+  getXpStatus,
+  getWeaponOverrides,
   getState,
   getStats,
   recordNote,
@@ -14,9 +17,13 @@ import {
   setNoteShare,
   setSharedReferenceImages,
   setFear,
+  setPlayerNotes,
+  setWeaponOverride,
+  addExperience,
   updateCampaign
 } from "@/lib/state";
 import { NextRequest, NextResponse } from "next/server";
+import { validateSession } from "@/lib/dm-session";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -34,6 +41,19 @@ export async function GET(req: NextRequest) {
     ? Object.fromEntries(characters.filter((c) => c.key === playerKey).map((c) => [c.id, stats[c.id]]))
     : stats;
 
+  const weaponOverrides = playerKey
+    ? (() => {
+        const character = characters.find((c) => c.key === playerKey);
+        return character ? { [character.id]: getWeaponOverrides(character.id) } : {};
+      })()
+    : Object.fromEntries(characters.map((c) => [c.id, getWeaponOverrides(c.id)]));
+  const xpStatus = playerKey
+    ? (() => {
+        const character = characters.find((c) => c.key === playerKey);
+        return character ? { [character.id]: getXpStatus(character.id) } : {};
+      })()
+    : Object.fromEntries(characters.map((c) => [c.id, getXpStatus(c.id)]));
+
   return NextResponse.json({
     characters: playerKey ? characters.filter((c) => c.key === playerKey) : characters,
     campaign,
@@ -41,28 +61,62 @@ export async function GET(req: NextRequest) {
     events,
     referenceNotes: getState().referenceNotes,
     sharedReferenceImages: getState().sharedReferenceImages ?? [],
-    fear: getState().fear ?? 0
+    fear: getState().fear ?? 0,
+    activeCampaignId: getActiveCampaignId(),
+    playerNotes: playerKey ? getPlayerNotes(playerKey) : undefined,
+    weaponOverrides,
+    xpStatus,
+    ...getDirtyState()
   });
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { playerKey, characterId, stats, note, type, shared, noteId, images, adminKey, fear } = body as {
+  const {
+    playerKey,
+    characterId,
+    stats,
+    note,
+    type,
+    shared,
+    noteId,
+    images,
+    adminKey,
+    sessionToken,
+    fear,
+    weapon,
+    slot,
+    xpAmount
+  } = body as {
     playerKey?: string;
     characterId?: string;
     stats?: unknown;
     note?: string;
-    type?: "note" | "stat-update" | "stat-sync" | "note-share" | "images-share" | "fear";
+    type?:
+      | "note"
+      | "stat-update"
+      | "stat-sync"
+      | "note-share"
+      | "images-share"
+      | "fear"
+      | "player-notes"
+      | "weapon-assign"
+      | "xp-add";
     shared?: boolean;
     noteId?: string;
     images?: { title: string; url: string }[];
     adminKey?: string;
+    sessionToken?: string;
     fear?: number;
+    weapon?: unknown;
+    slot?: "primary" | "secondary" | "tertiary";
+    xpAmount?: number;
   };
 
   if (type === "images-share") {
     const expected = process.env.DM_KEY ?? "dm-secret";
-    if (adminKey !== expected) {
+    const allowed = adminKey === expected || validateSession(sessionToken);
+    if (!allowed) {
       return NextResponse.json({ error: "invalid admin key" }, { status: 401 });
     }
     if (!Array.isArray(images)) {
@@ -77,9 +131,55 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ note: created });
   }
 
+  if (type === "player-notes") {
+    if (!playerKey || typeof note !== "string") {
+      return NextResponse.json({ error: "playerKey and note are required" }, { status: 400 });
+    }
+    const updated = setPlayerNotes(playerKey, note);
+    return NextResponse.json({ playerNotes: updated });
+  }
+
+  if (type === "weapon-assign") {
+    if (!characterId || !slot) {
+      return NextResponse.json({ error: "characterId and slot are required" }, { status: 400 });
+    }
+    const expected = process.env.DM_KEY ?? "dm-secret";
+    let allowed = adminKey === expected || validateSession(sessionToken);
+    if (!allowed && weapon == null && playerKey) {
+      const characters = loadCharacters();
+      const target = characters.find((c) => c.id === characterId);
+      if (target && target.key === playerKey) {
+        allowed = true;
+      }
+    }
+    if (!allowed) {
+      return NextResponse.json({ error: "invalid admin key" }, { status: 401 });
+    }
+    const updated = setWeaponOverride(characterId, slot, (weapon as any) ?? null);
+    return NextResponse.json({ weaponOverrides: updated });
+  }
+
+  if (type === "xp-add") {
+    if (!characterId || typeof xpAmount !== "number") {
+      return NextResponse.json({ error: "characterId and xpAmount are required" }, { status: 400 });
+    }
+    const expected = process.env.DM_KEY ?? "dm-secret";
+    const allowed = adminKey === expected || validateSession(sessionToken);
+    if (!allowed) {
+      return NextResponse.json({ error: "invalid admin key" }, { status: 401 });
+    }
+    const character = loadCharacters().find((c) => c.id === characterId);
+    if (!character) {
+      return NextResponse.json({ error: "character not found" }, { status: 404 });
+    }
+    const updated = addExperience(character, xpAmount);
+    return NextResponse.json({ xpStatus: updated });
+  }
+
   if (type === "fear") {
     const expected = process.env.DM_KEY ?? "dm-secret";
-    if (adminKey !== expected) {
+    const allowed = adminKey === expected || validateSession(sessionToken);
+    if (!allowed) {
       return NextResponse.json({ error: "invalid admin key" }, { status: 401 });
     }
     if (typeof fear !== "number") {
@@ -130,15 +230,17 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  const { eventId, status, resolutionNote, adminKey } = body as {
+  const { eventId, status, resolutionNote, adminKey, sessionToken } = body as {
     eventId?: string;
     status?: "approved" | "rejected";
     resolutionNote?: string;
     adminKey?: string;
+    sessionToken?: string;
   };
 
   const expected = process.env.DM_KEY ?? "dm-secret";
-  if (adminKey !== expected) {
+  const allowed = adminKey === expected || validateSession(sessionToken);
+  if (!allowed) {
     return NextResponse.json({ error: "invalid admin key" }, { status: 401 });
   }
 
